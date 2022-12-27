@@ -4,10 +4,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const webpackMode = process.env.NODE_ENV || "development";
 
 const plugins = [
+  new ReactRefreshWebpackPlugin(),
   new HtmlWebpackPlugin({
       template: "./src/index.html",
       minify:
@@ -47,6 +49,9 @@ module.exports = {
     port: 8084,
     allowedHosts: "all",
     host: "0.0.0.0",
+    client: {
+      webSocketURL: 'ws://0.0.0.0/npm/ws',
+    },
   },
   optimization: {
     minimizer:
@@ -78,6 +83,7 @@ module.exports = {
           }],
           '@babel/preset-react',
         ],
+        plugins: ['react-refresh/babel'],
       },
       exclude: path.join(__dirname, 'node_modules'),
     }],
