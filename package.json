@@ -24,7 +24,6 @@
     "core-js": "^3.26.1",
     "cross-env": "^7.0.3",
     "html-webpack-plugin": "^5.5.0",
-    "react-refresh": "^0.14.0",
     "terser-webpack-plugin": "^5.3.6",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",

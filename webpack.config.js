@@ -8,28 +8,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const webpackMode = process.env.NODE_ENV || "development";
 
-const plugins = [
-  new ReactRefreshWebpackPlugin(),
-  new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      minify:
-        process.env.NODE_ENV === "production"
-          ? {
-              collapseWhitespace: true,
-              removeComments: true,
-            }
-          : false,
-    }),
-  // new CopyWebpackPlugin({
-  //     patterns: [
-  //       { from: "./src/images", to: "./images" },
-  //     ],
-  //   }),
-];
-if (process.env.NODE_ENV === "production") {
-  plugins.push(new CleanWebpackPlugin());
-}
-
 module.exports = {
   name: 'name',
   mode: webpackMode,
@@ -52,6 +30,7 @@ module.exports = {
     client: {
       webSocketURL: 'ws://0.0.0.0/npm/ws',
     },
+    liveReload: false
   },
   optimization: {
     minimizer:
@@ -83,10 +62,28 @@ module.exports = {
           }],
           '@babel/preset-react',
         ],
-        plugins: ['react-refresh/babel'],
+        plugins: [webpackMode === "development" && require.resolve('react-refresh/babel')].filter(Boolean),
       },
       exclude: path.join(__dirname, 'node_modules'),
     }],
   },
-  plugins,
+  plugins : [
+    webpackMode === "development" && new ReactRefreshWebpackPlugin(),
+    webpackMode === "production" && new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+        template: "./src/index.html",
+        minify:
+          webpackMode === "production"
+            ? {
+                collapseWhitespace: true,
+                removeComments: true,
+              }
+            : false,
+      }),
+    // new CopyWebpackPlugin({
+    //     patterns: [
+    //       { from: "./src/images", to: "./images" },
+    //     ],
+    //   }),
+  ].filter(Boolean),
 };
