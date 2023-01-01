@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const webpackMode = process.env.NODE_ENV || "development";
 
@@ -67,8 +68,14 @@ module.exports = {
         exclude: path.join(__dirname, 'node_modules'),
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          webpackMode === "development"
+            ? MiniCssExtractPlugin.loader
+            : 'style-loader',
+          'css-loader',
+          // 'sass-loader',
+        ],
       },
       {
         test: /\.(jpe?g|gif|png|svg|ico)$/i,
@@ -81,8 +88,6 @@ module.exports = {
     ],
   },
   plugins : [
-    webpackMode === "development" && new ReactRefreshWebpackPlugin(),
-    webpackMode === "production" && new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
         template: "./public/index.html",
         favicon: "./public/favicon.ico",
@@ -94,5 +99,10 @@ module.exports = {
               }
             : false,
       }),
+    webpackMode === "development" && new ReactRefreshWebpackPlugin(),
+    webpackMode === "development" && new MiniCssExtractPlugin({
+      filename: '[name].css'
+    }),
+    webpackMode === "production" && new CleanWebpackPlugin()
   ].filter(Boolean),
 };

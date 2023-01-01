@@ -3,7 +3,7 @@
 ----------
 npm i react react-dom
 ----------
-npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader clean-webpack-plugin copy-webpack-plugin core-js cross-env html-webpack-plugin terser-webpack-plugin webpack webpack-cli webpack-dev-server @pmmmwh/react-refresh-webpack-plugin mini-css-extract-plugin css-loader style-loader file-loader
+npm i -D @babel/core @babel/preset-env @babel/preset-react @pmmmwh/react-refresh-webpack-plugin babel-loader clean-webpack-plugin core-js cross-env css-loader file-loader html-webpack-plugin mini-css-extract-plugin style-loader terser-webpack-plugin webpack webpack-cli webpack-dev-server
 ----------
 
 2. 개발용 서버 구동
@@ -24,11 +24,3 @@ npm start 또는 npm run build 실행 시 에러가 난다면 Node.js를 LTS 버
 ----------
 n lts
 ----------
-
-(!)
-ERROR in unable to locate '경로...'
-위와 같은 에러가 발생한다면, webpack.config.js의 CopyWebpackPlugin에 설정된 파일이 있는지 확인해주세요.
-CSS나 이미지 폴더 등이 필요하지 않다면 webpack.config.js에서 CopyWebpackPlugin 부분 전체를 주석 처리 해주세요.
-----------
-CopyWebpackPlugin: 그대로 복사할 파일들을 설정하는 플러그인 아래 patterns에 설정한 파일/폴더는 빌드 시 dist 폴더에 자동으로 생성됩니다.
-patterns에 설정한 경로에 해당 파일이 없으면 에러가 발생합니다.

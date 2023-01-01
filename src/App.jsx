@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import FuncComp from '../components/FuncComp';
-import ClassComp from '../components/ClassComp';
+import React, {useState} from 'react';
+import FuncComp from './components/FuncComp';
+import ClassComp from './components/ClassComp';
 import './App.css';
 
 function App() {
